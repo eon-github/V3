@@ -15,7 +15,7 @@ const uploadDir = path.join(__dirname, "..", "public", "images");
 async function connectToDB() {
   try {
     const client = await MongoClient.connect(uri);
-    return client.db("eggyDB");
+    return client.db("test");
   } catch (error) {
     console.error("Error connecting to MongoDB:", error);
     throw error;
@@ -242,7 +242,7 @@ module.exports = function (app, app_data) {
         }
 
         const client = await MongoClient.connect(uri);
-        const dbo = client.db("eggyDB");
+        const dbo = client.db("test");
         const collName = dbo.collection("users");
 
         const users = await userModel.find({}, "username email").lean();
@@ -295,7 +295,7 @@ module.exports = function (app, app_data) {
   app.post("/read-user", async (req, res) => {
     try {
       const client = await MongoClient.connect(uri);
-      const dbo = client.db("eggyDB");
+      const dbo = client.db("test");
       const collName = dbo.collection("users");
 
       const searchQuery = {
@@ -469,7 +469,7 @@ module.exports = function (app, app_data) {
     MongoClient.connect(uri)
       .then((client) => {
         console.log("Connected to MongoDB");
-        const dbo = client.db("eggyDB"); // Get the database object
+        const dbo = client.db("test"); // Get the database object
         const collName = dbo.collection("comments"); // Get the collection
         const cursor = collName.find({}); // Find all documents in the collection
 
