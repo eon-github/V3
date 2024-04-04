@@ -1,6 +1,6 @@
 const express = require("express");
 const { MongoClient } = require("mongodb");
-const uri = "mongodb://127.0.0.1:27017/eggyDB";
+const uri = "mongodb+srv://maxeneallison:tiQi88bNBTCJdlVT@cluster0.3htzzpu.mongodb.net/";
 
 const bcrypt = require("bcrypt");
 const saltRounds = 10;
@@ -41,10 +41,8 @@ function cutShort(sentence) {
 
   return newSentence;
 }
-function errorFn(err) {
-  console.log("Error fond. Please trace!");
-  console.error(err);
-}
+
+
 module.exports = function (app, app_data) {
   //Data Models or Schemas
   const restoModel = app_data["restoModel"];
