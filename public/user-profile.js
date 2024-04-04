@@ -282,10 +282,9 @@ forms.forEach((form) => {
   form.addEventListener("submit", handleSubmit);
 });
 
-// Track whether thumbs-up button is clicked or not
-var thumbsUpClicked = false;
 
-// Track whether thumbs-down button is clicked or not
+//======================= VOTE ========================
+var thumbsUpClicked = false;
 var thumbsDownClicked = false;
 
 // Function to handle thumbs-up button click
@@ -293,10 +292,9 @@ document.querySelector(".thumbs-up-btn").addEventListener("click", function () {
   var likeCountElement = document.getElementById("count-like");
   var likeCount = parseInt(likeCountElement.textContent);
 
-  // If thumbs-up button is not clicked and thumbs-down button is not clicked, increment like count
   if (!thumbsUpClicked && !thumbsDownClicked) {
     likeCount++;
-    thumbsUpClicked = true; // Update state to clicked
+    thumbsUpClicked = true; 
   } else if (thumbsUpClicked) {
     // If thumbs-up button is already clicked, decrement like count
     likeCount--;
