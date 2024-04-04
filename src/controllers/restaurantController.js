@@ -5,14 +5,12 @@ const uri = "mongodb://127.0.0.1:27017/eggyDB";
 const bcrypt = require("bcrypt");
 const saltRounds = 10;
 
-const { User } = require('../models/db.js'); 
-const multer = require('multer');
-const path = require('path');
-const fs = require('fs');
-const uploadDir = path.join(__dirname, '..', 'public', 'images');
+const { User } = require("../models/db.js");
+const multer = require("multer");
+const path = require("path");
+const fs = require("fs");
+const uploadDir = path.join(__dirname, "..", "public", "images");
 // app.use(express.static(path.join(__dirname, 'src', 'public')));
-
-
 
 async function connectToDB() {
   try {
@@ -43,8 +41,8 @@ function cutShort(sentence) {
 
   return newSentence;
 }
-function errorFn(err){
-  console.log('Error fond. Please trace!');
+function errorFn(err) {
+  console.log("Error fond. Please trace!");
   console.error(err);
 }
 module.exports = function (app, app_data) {
@@ -318,17 +316,17 @@ module.exports = function (app, app_data) {
 
         const userInfo = await userModel
           .findOne({
-            username: req.body.userlogin
+            username: req.body.userlogin,
           })
           .lean();
 
-          console.log(userInfo);
+        console.log(userInfo);
 
         if (userInfo) {
           loginInfo = {
             username: req.body.userlogin,
             password: req.body.passlogin,
-            avatar_img: userInfo.avatar_img
+            avatar_img: userInfo.avatar_img,
           };
           res.redirect("/");
         } else {
@@ -351,255 +349,278 @@ module.exports = function (app, app_data) {
   const createArray = (N) => {
     return [...Array(N).keys()].map((i) => i + 1);
   };
-  
-app.get("/userProfile", async (req, res) => {
-  try {
-    const username = loginInfo.username;
-    // Fetch data for comments, users, and restaurants concurrently
-    const [comments, users, restaurants] = await Promise.all([
-      getData("comments", { name: username }), // Filter comments by name
-      getData("users", { username: username }), // Filter users by username
-      getData("restaurants", {}), // Fetch all restaurants
-    ]);
 
-    const createArrays = (comment) => {
-      comment["food-stars"] = createArray(comment["food-rating"]);
-      comment["service-stars"] = createArray(comment["service-rating"]);
-      comment["ambiance-stars"] = createArray(comment["ambiance-rating"]);
-      comment["overall-stars"] = createArray(comment["overall-rating"]);
-    };
+  app.get("/userProfile", async (req, res) => {
+    try {
+      const username = loginInfo.username;
+      // Fetch data for comments, users, and restaurants concurrently
+      const [comments, users, restaurants] = await Promise.all([
+        getData("comments", { name: username }), // Filter comments by name
+        getData("users", { username: username }), // Filter users by username
+        getData("restaurants", {}), // Fetch all restaurants
+      ]);
 
-    const createRestaurantArrays = (restaurant) => {
-      restaurant["rating-stars"] = createArray(restaurant["main_rating"]);
-    };
+      const createArrays = (comment) => {
+        comment["food-stars"] = createArray(comment["food-rating"]);
+        comment["service-stars"] = createArray(comment["service-rating"]);
+        comment["ambiance-stars"] = createArray(comment["ambiance-rating"]);
+        comment["overall-stars"] = createArray(comment["overall-rating"]);
+      };
 
-    comments.forEach(createArrays);
-    restaurants.forEach(createRestaurantArrays);
-    console.log("These are the users");
-    console.log(users);
-    console.log("Data fetched successfully");
+      const createRestaurantArrays = (restaurant) => {
+        restaurant["rating-stars"] = createArray(restaurant["main_rating"]);
+      };
 
-    // Render user profile page with data
-    res.render("user-profile", {
-      layout: "user-layout",
-      title: "User Profile",
-      commentData: comments,
-      userData: [users[0]], // Assuming users variable is defined somewhere
-      restoData: restaurants,
-      loginData: loginInfo
-    });
-  } catch (error) {
-    console.error("Error fetching data:", error);
-    res.status(500).send("Error fetching data");
-  }
-});
+      comments.forEach(createArrays);
+      restaurants.forEach(createRestaurantArrays);
+      console.log("These are the users");
+      console.log(users);
+      console.log("Data fetched successfully");
 
-app.post('/update-comment', function (req, resp) {
-  console.log("RECEIVED", req.body);
+      // Render user profile page with data
+      res.render("user-profile", {
+        layout: "user-layout",
+        title: "User Profile",
+        commentData: comments,
+        userData: [users[0]], // Assuming users variable is defined somewhere
+        restoData: restaurants,
+        loginData: loginInfo,
+      });
+    } catch (error) {
+      console.error("Error fetching data:", error);
+      res.status(500).send("Error fetching data");
+    }
+  });
 
-  // Parse the received ratings data
-  const ratingsData = req.body;
+  app.post("/update-comment", function (req, resp) {
+    console.log("RECEIVED", req.body);
 
-  // Initialize objects to store ratings for each category
-  const foodRatings = {};
-  const serviceRatings = {};
-  const ambianceRatings = {};
-  const overallRatings = {};
+    // Parse the received ratings data
+    const ratingsData = req.body;
 
-  // Iterate over the keys of ratingsData
-  for (const key in ratingsData) {
+    // Initialize objects to store ratings for each category
+    const foodRatings = {};
+    const serviceRatings = {};
+    const ambianceRatings = {};
+    const overallRatings = {};
+
+    // Iterate over the keys of ratingsData
+    for (const key in ratingsData) {
       // Check the category of the rating based on the key prefix
-      if (key.startsWith('food-')) {
-          const id = key.slice(5); // Remove the 'food-' prefix to get the id
-          foodRatings[id] = ratingsData[key];
-      } else if (key.startsWith('service-')) {
-          const id = key.slice(8); // Remove the 'service-' prefix to get the id
-          serviceRatings[id] = ratingsData[key];
-      } else if (key.startsWith('ambiance-')) {
-          const id = key.slice(9); // Remove the 'ambiance-' prefix to get the id
-          ambianceRatings[id] = ratingsData[key];
-      } else if (key.startsWith('overall-')) {
-          const id = key.slice(8); // Remove the 'overall-' prefix to get the id
-          overallRatings[id] = ratingsData[key];
+      if (key.startsWith("food-")) {
+        const id = key.slice(5); // Remove the 'food-' prefix to get the id
+        foodRatings[id] = ratingsData[key];
+      } else if (key.startsWith("service-")) {
+        const id = key.slice(8); // Remove the 'service-' prefix to get the id
+        serviceRatings[id] = ratingsData[key];
+      } else if (key.startsWith("ambiance-")) {
+        const id = key.slice(9); // Remove the 'ambiance-' prefix to get the id
+        ambianceRatings[id] = ratingsData[key];
+      } else if (key.startsWith("overall-")) {
+        const id = key.slice(8); // Remove the 'overall-' prefix to get the id
+        overallRatings[id] = ratingsData[key];
       }
-  }
+    }
 
-  // Extract document ID, title, and description
-  const { id, title, desc } = req.body;
+    // Extract document ID, title, and description
+    const { id, title, desc } = req.body;
 
-  // Update the document in the database
-  commentModel.findById(id).then(function (updateResult) {
-      if (!updateResult) {
+    // Update the document in the database
+    commentModel
+      .findById(id)
+      .then(function (updateResult) {
+        if (!updateResult) {
           console.log("No matching document found." + id);
           return resp.status(404).send("No matching document found" + id);
-      }
+        }
 
-      console.log(updateResult);
-      updateResult.title = title;
-      updateResult.content = desc;
-      updateResult['food-rating'] = foodRatings[0];
-      updateResult['service-rating'] = serviceRatings[0];
-      updateResult['ambiance-rating'] = ambianceRatings[0];
-      updateResult['overall-rating'] = overallRatings[0];
+        console.log(updateResult);
+        updateResult.title = title;
+        updateResult.content = desc;
+        updateResult["food-rating"] = foodRatings[0];
+        updateResult["service-rating"] = serviceRatings[0];
+        updateResult["ambiance-rating"] = ambianceRatings[0];
+        updateResult["overall-rating"] = overallRatings[0];
 
-      // Save the updated document
-      updateResult.save().then(function (updateSaved) {
-          if (updateSaved) {
+        // Save the updated document
+        updateResult
+          .save()
+          .then(function (updateSaved) {
+            if (updateSaved) {
               console.log("Update successful");
               // Send the updated comment data as JSON response
               resp.json(updateResult);
-          } else {
+            } else {
               console.log("Update failed");
               resp.status(500).send("Update failed");
-          }
-      }).catch(function (error) {
-          console.error("Error saving update:", error);
-          resp.status(500).send("Error saving update");
-      });
-  }).catch(function (error) {
-      console.error("Error finding document:", error);
-      resp.status(500).send("Error finding document");
-  });
-});
-
-app.get("/chimmy", function (req, resp) {
-  // Connect to MongoDB
-  MongoClient.connect(uri)
-    .then((client) => {
-      console.log("Connected to MongoDB");
-      const dbo = client.db("eggyDB"); // Get the database object
-      const collName = dbo.collection("comments"); // Get the collection
-      const cursor = collName.find({}); // Find all documents in the collection
-
-      const col2ndName = dbo.collection("restaurants");
-      const cursor2nd = col2ndName.find({});
-
-      Promise.all([cursor.toArray(), cursor2nd.toArray()])
-        .then(function ([comments, restaurants]) {
-          const createArrays = (comment) => {
-            comment["food-stars"] = createArray(comment["food-rating"]);
-            comment["service-stars"] = createArray(comment["service-rating"]);
-            comment["ambiance-stars"] = createArray(
-              comment["ambiance-rating"]
-            );
-            comment["overall-stars"] = createArray(comment["overall-rating"]);
-          };
-          const createRestaurantArrays = (restaurant) => {
-            restaurant["rating-stars"] = createArray(
-              restaurant["main_rating"]
-            );
-          };
-
-          comments.forEach(createArrays);
-          restaurants.forEach(createRestaurantArrays);
-          console.log(comments[0]);
-          console.log(restaurants);
-          console.log("Length Here");
-          console.log(restaurants.length);
-          console.log("Data fetched successfully");
-
-          // Split the displayRestos array into two arrays
-          resp.render("estb-review", {
-            layout: "estb-review-layout",
-            title: "Review",
-            commentData: comments,
-            restoData: [restaurants[0]],
+            }
+          })
+          .catch(function (error) {
+            console.error("Error saving update:", error);
+            resp.status(500).send("Error saving update");
           });
-        })
-        .catch(function (error) {
-          console.error("Error fetching data:", error);
-          resp.status(500).send("Error fetching data");
-        })
-        .finally(() => {
-          client.close(); // Close the MongoDB client after fetching data
-        });
-    })
-    .catch((err) => {
-      console.error("Error connecting to MongoDB:", err);
-      resp.status(500).send("Error connecting to MongoDB");
-    });
-});
+      })
+      .catch(function (error) {
+        console.error("Error finding document:", error);
+        resp.status(500).send("Error finding document");
+      });
+  });
 
-// const upload = multer({ storage });
-const storage = multer.diskStorage({
-  destination: function(req, file, cb) {
-    // Construct the path to the public/images directory relative to this script
-    const uploadsDir = path.join(__dirname, '..', '..', 'public', 'images');
-    if (!fs.existsSync(uploadsDir)) {
-      fs.mkdirSync(uploadsDir, { recursive: true });
-    }
-    cb(null, uploadsDir);
-  },
-  filename: function(req, file, cb) {
-    // Generate a unique filename for the uploaded file
-    cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname));
-  }
-});
+  app.get("/chimmy", function (req, resp) {
+    // Connect to MongoDB
+    MongoClient.connect(uri)
+      .then((client) => {
+        console.log("Connected to MongoDB");
+        const dbo = client.db("eggyDB"); // Get the database object
+        const collName = dbo.collection("comments"); // Get the collection
+        const cursor = collName.find({}); // Find all documents in the collection
 
-const upload = multer({ storage });
+        const col2ndName = dbo.collection("restaurants");
+        const cursor2nd = col2ndName.find({});
 
+        Promise.all([cursor.toArray(), cursor2nd.toArray()])
+          .then(function ([comments, restaurants]) {
+            const createArrays = (comment) => {
+              comment["food-stars"] = createArray(comment["food-rating"]);
+              comment["service-stars"] = createArray(comment["service-rating"]);
+              comment["ambiance-stars"] = createArray(
+                comment["ambiance-rating"]
+              );
+              comment["overall-stars"] = createArray(comment["overall-rating"]);
+            };
+            const createRestaurantArrays = (restaurant) => {
+              restaurant["rating-stars"] = createArray(
+                restaurant["main_rating"]
+              );
+            };
 
-app.post('/update-profile', upload.single('img'), async (req, res) => {
-  const { username: newUsername, email, password, description } = req.body;
-  // const avatarImgPath = req.file ? path.join('/images', req.file.filename) : undefined;
-  // const avatarImgPath = req.file ? `/images/${req.file.filename}` : undefined;
-  // Inside your /update-profile route
-  const avatarImgPath = req.file ? `/images/${req.file.filename}` : undefined;
+            comments.forEach(createArrays);
+            restaurants.forEach(createRestaurantArrays);
+            console.log(comments[0]);
+            console.log(restaurants);
+            console.log("Length Here");
+            console.log(restaurants.length);
+            console.log("Data fetched successfully");
 
-  const currentUsername = loginInfo.username;
+            // Split the displayRestos array into two arrays
+            resp.render("estb-review", {
+              layout: "estb-review-layout",
+              title: "Review",
+              commentData: comments,
+              restoData: [restaurants[0]],
+            });
+          })
+          .catch(function (error) {
+            console.error("Error fetching data:", error);
+            resp.status(500).send("Error fetching data");
+          })
+          .finally(() => {
+            client.close(); // Close the MongoDB client after fetching data
+          });
+      })
+      .catch((err) => {
+        console.error("Error connecting to MongoDB:", err);
+        resp.status(500).send("Error connecting to MongoDB");
+      });
+  });
 
-  try {
-    const user = await User.findOne({ username: currentUsername });
-    if (!user) {
-      return res.status(404).json({ success: false, message: 'User not found' });
-    }
-
-    // Dynamically create an update object
-    let updateData = {};
-    if (newUsername) updateData.username = newUsername;
-    if (email) updateData.email = email;
-    
-    // Only hash the password if it's provided
-    if (password) {
-      // Hash the new password
-      const hashedPassword = await bcrypt.hash(password, saltRounds);
-      updateData.password = hashedPassword;
-    }
-    
-    if (avatarImgPath) updateData.avatar_img = avatarImgPath;
-    if (description) updateData.description = description;
-
-    // Perform the update only if updateData is not empty
-    if (Object.keys(updateData).length > 0) {
-      const updatedUser = await User.findByIdAndUpdate(user._id, updateData, { new: true });
-      if (updatedUser) {
-        // Optionally update loginInfo if the username changes
-        if (newUsername) loginInfo.username = newUsername;
-        res.json({ success: true, message: 'Profile updated successfully', user: updatedUser });
-      } else {
-        res.status(404).json({ success: false, message: 'Update failed' });
+  // const upload = multer({ storage });
+  const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+      // Construct the path to the public/images directory relative to this script
+      const uploadsDir = path.join(__dirname, "..", "..", "public", "images");
+      if (!fs.existsSync(uploadsDir)) {
+        fs.mkdirSync(uploadsDir, { recursive: true });
       }
-    } else {
-      res.json({ success: false, message: 'No update information provided' });
-    }
-  } catch (error) {
-    console.error('Error updating user profile:', error);
-    res.status(500).json({ success: false, message: 'Error updating profile' });
-  }
-});
+      cb(null, uploadsDir);
+    },
+    filename: function (req, file, cb) {
+      // Generate a unique filename for the uploaded file
+      cb(
+        null,
+        file.fieldname + "-" + Date.now() + path.extname(file.originalname)
+      );
+    },
+  });
 
-app.post('/delete-account', async (req, res) => {
-  if (!loginInfo) {
-    // This condition checks if there's a user logged in
-    return res.status(403).json({ success: false, message: "No user logged in." });
-  }
-  
-  const currentUsername = loginInfo.username; // Get the username of the logged-in user
-  
-  try {
+  const upload = multer({ storage });
+
+  app.post("/update-profile", upload.single("img"), async (req, res) => {
+    const { username: newUsername, email, password, description } = req.body;
+    // const avatarImgPath = req.file ? path.join('/images', req.file.filename) : undefined;
+    // const avatarImgPath = req.file ? `/images/${req.file.filename}` : undefined;
+    // Inside your /update-profile route
+    const avatarImgPath = req.file ? `/images/${req.file.filename}` : undefined;
+
+    const currentUsername = loginInfo.username;
+
+    try {
+      const user = await User.findOne({ username: currentUsername });
+      if (!user) {
+        return res
+          .status(404)
+          .json({ success: false, message: "User not found" });
+      }
+
+      // Dynamically create an update object
+      let updateData = {};
+      if (newUsername) updateData.username = newUsername;
+      if (email) updateData.email = email;
+
+      // Only hash the password if it's provided
+      if (password) {
+        // Hash the new password
+        const hashedPassword = await bcrypt.hash(password, saltRounds);
+        updateData.password = hashedPassword;
+      }
+
+      if (avatarImgPath) updateData.avatar_img = avatarImgPath;
+      if (description) updateData.description = description;
+
+      // Perform the update only if updateData is not empty
+      if (Object.keys(updateData).length > 0) {
+        const updatedUser = await User.findByIdAndUpdate(user._id, updateData, {
+          new: true,
+        });
+        if (updatedUser) {
+          // Optionally update loginInfo if the username changes
+          if (newUsername) loginInfo.username = newUsername;
+          res.json({
+            success: true,
+            message: "Profile updated successfully",
+            user: updatedUser,
+          });
+        } else {
+          res.status(404).json({ success: false, message: "Update failed" });
+        }
+      } else {
+        res.json({ success: false, message: "No update information provided" });
+      }
+    } catch (error) {
+      console.error("Error updating user profile:", error);
+      res
+        .status(500)
+        .json({ success: false, message: "Error updating profile" });
+    }
+  });
+
+  app.post("/delete-account", async (req, res) => {
+    if (!loginInfo) {
+      // This condition checks if there's a user logged in
+      return res
+        .status(403)
+        .json({ success: false, message: "No user logged in." });
+    }
+
+    const currentUsername = loginInfo.username; // Get the username of the logged-in user
+
+    try {
       const result = await User.deleteOne({ username: currentUsername });
       if (result.deletedCount === 0) {
-          return res.json({ success: false, message: "Failed to delete account." });
+        return res.json({
+          success: false,
+          message: "Failed to delete account.",
+        });
       }
 
       // Clear the loginInfo as the account has been successfully deleted
@@ -607,32 +628,52 @@ app.post('/delete-account', async (req, res) => {
 
       // Since this route handles AJAX requests, we can't directly use res.redirect here
       // Instead, we send a response indicating success and handle the redirection on the client side
-      res.json({ success: true, message: "Account deleted successfully.", redirectTo: '/' });
-  } catch (error) {
-      console.error('Error deleting user account:', error);
-      res.status(500).json({ success: false, message: 'Error deleting account' });
-  }
+      res.json({
+        success: true,
+        message: "Account deleted successfully.",
+        redirectTo: "/",
+      });
+    } catch (error) {
+      console.error("Error deleting user account:", error);
+      res
+        .status(500)
+        .json({ success: false, message: "Error deleting account" });
+    }
+  });
+
+  app.post('/action', function(req, resp){
+    console.log(req.body.player)
+    console.log(req.body.cell)
+
+    let action = new actionModel({
+        player: req.body.player,
+        location: req.body.cell  
+    })
+
+    //action.save().then(() =>console.log("successfully added to database"))
+    actions.push(action)
+
+    resp.send({
+        images : images
+    })
+    resp.render('main',{
+        layout: 'index', 
+        title: 'My Game page'
+    })
+
 });
 
-app.post("/update-like-count", async (req, res) => {
-  try {
-    // Extract the updated like count from the request body
-    const { numLike } = req.body;
-
-    // Perform the update operation in the MongoDB database
-    // Assuming you have a Comment model defined
-    await Comment.updateOne({}, { $set: { numLike: numLike } });
-
-    // Send a success response back to the client
-    res.status(200).send("Like count updated successfully.");
-  } catch (error) {
-    console.error("Error updating like count:", error);
-    res.status(500).send("Error updating like count");
-  }
-});
-
-
-
-
-};
-
+  app.get("/update-like-count", async (req, resp) => {
+    try {
+      await commentModel.updateOne({}, { $set: { numLike: numLike } });
+      console.log(">>>>>>>>>>Ilan " + numLike);
+  
+      resp.send({
+            numLike : numLike,
+      })
+    } catch (error) {
+      console.error("Error updating like count:", error);
+      res.status(500).send("Error updating like count");
+    }
+  });
+}

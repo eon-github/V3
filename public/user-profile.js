@@ -244,7 +244,6 @@ function handleSubmit(event) {
   modals[modalId].close();
 }
 
-
 // Function to handle star click
 function handleStarClick(stars, index, ratingType) {
   stars.forEach((star, index2) => {
@@ -283,9 +282,6 @@ forms.forEach((form) => {
   form.addEventListener("submit", handleSubmit);
 });
 
-
-//================== VOTE ==============
-
 // Track whether thumbs-up button is clicked or not
 var thumbsUpClicked = false;
 
@@ -300,12 +296,30 @@ document.querySelector(".thumbs-up-btn").addEventListener("click", function () {
   // If thumbs-up button is not clicked and thumbs-down button is not clicked, increment like count
   if (!thumbsUpClicked && !thumbsDownClicked) {
     likeCount++;
-    thumbsUpClicked = true; // Update clicked
+    thumbsUpClicked = true; // Update state to clicked
   } else if (thumbsUpClicked) {
     // If thumbs-up button is already clicked, decrement like count
     likeCount--;
     thumbsUpClicked = false; // Update state to unclicked
   }
 
-  likeCountElement.textContent = likeCount; //add by 1
+  likeCountElement.textContent = likeCount;
 });
+
+// Function to handle thumbs-down button click
+document
+  .querySelector(".thumbs-down-btn")
+  .addEventListener("click", function () {
+    var dislikeCountElement = document.getElementById("count-dislike");
+    var dislikeCount = parseInt(dislikeCountElement.textContent);
+
+    if (!thumbsDownClicked && !thumbsUpClicked) {
+      dislikeCount++;
+      thumbsDownClicked = true;
+    } else if (thumbsDownClicked) {
+      dislikeCount--;
+      thumbsDownClicked = false; 
+    }
+
+    dislikeCountElement.textContent = dislikeCount;
+  });
