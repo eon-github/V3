@@ -7,15 +7,18 @@
 // npm i install bcrypt 
 // npm i install multer
 // npm i express express-handlebars body-parser multer
+// npm i cookie-parser
 
 /*Imports */
 const express = require("express");
+const cookieParser = require('cookie-parser');
 const path = require("path");
 const bodyParser = require("body-parser");
 const exphbs = require("express-handlebars");
 const fs = require("fs");
 const app = express();
 const PORT = 4000;
+
 
 const rawData = fs.readFileSync("src/models/Restaurant.json");
 const resto = JSON.parse(rawData);
@@ -44,6 +47,13 @@ app.set("views", path.join(__dirname, "src", "views")); // views directory path
 app.use(express.static("public"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser());
+// app.use(session({
+//   secret: 'secret lang',
+//   cookie: { maxAge: 30000 },
+//   saveUninitialized: false,
+//   store
+// }));
 
 const mongoose = require("mongoose");
 
