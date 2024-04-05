@@ -1,6 +1,6 @@
 const express = require("express");
 const { MongoClient } = require("mongodb");
-const uri = "mongodb+srv://neodg:lo33jKXpU6JjvrA4@eggydb.bwuccr2.mongodb.net/"
+const uri = "mongodb://127.0.0.1:27017/eggyDB";
 
 const bcrypt = require("bcrypt");
 const saltRounds = 10;
@@ -8,7 +8,7 @@ const saltRounds = 10;
 async function connectToDB() {
   try {
     const client = await MongoClient.connect(uri);
-    return client.db(process.env.DB_NAME);
+    return client.db('eggyDB');
   } catch (error) {
     console.error("Error connecting to MongoDB:", error);
     throw error;
@@ -234,7 +234,7 @@ module.exports = function (app, app_data) {
         }
 
         const client = await MongoClient.connect(uri);
-        const dbo = client.db(process.env.DB_NAME);
+        const dbo = client.db('eggyDB');
         const collName = dbo.collection("users");
 
         const users = await userModel.find({}, "username email").lean();
@@ -287,7 +287,7 @@ module.exports = function (app, app_data) {
   app.post("/read-user", async (req, res) => {
     try {
       const client = await MongoClient.connect(uri);
-      const dbo = client.db(process.env.DB_NAME);
+      const dbo = client.db('eggyDB');
       const collName = dbo.collection("users");
 
       const searchQuery = {
@@ -487,20 +487,21 @@ app.delete('/delete-comment', function(req, res) {
 
 
 
-// A middleware function to connect to MongoDB and get data
+// Middleware to fetch restaurant and comments data
 async function getRestaurantData(req, res, next) {
   const client = new MongoClient(uri);
   try {
     await client.connect();
-    const dbo = client.db(process.env.DB_NAME);
+    const dbo = client.db('eggyDB');
 
     const commentsCollection = dbo.collection("comments");
     const restaurantsCollection = dbo.collection("restaurants");
 
-    // You can store these in res.locals to access them later in the route handler
+    // Fetch all comments and restaurants, and store in res.locals
     res.locals.comments = await commentsCollection.find({}).toArray();
     res.locals.restaurants = await restaurantsCollection.find({}).toArray();
 
+    // Process comments
     res.locals.comments.forEach(comment => {
       comment["food-stars"] = createArray(comment["food-rating"]);
       comment["service-stars"] = createArray(comment["service-rating"]);
@@ -508,6 +509,7 @@ async function getRestaurantData(req, res, next) {
       comment["overall-stars"] = createArray(comment["overall-rating"]);
     });
 
+    // Process restaurants
     res.locals.restaurants.forEach(restaurant => {
       restaurant["rating-stars"] = createArray(restaurant["main_rating"]);
     });
@@ -521,24 +523,25 @@ async function getRestaurantData(req, res, next) {
   }
 }
 
-app.get("/:restaurantLink", getRestaurantData, (req, resp) => {
+// Route handler for restaurant page
+app.get("/:restaurantLink", getRestaurantData, async (req, resp) => {
   const restaurantLink = req.params.restaurantLink;
   const { comments, restaurants } = resp.locals;
 
   // Find the restaurant data based on the restaurant link
   const restaurantData = restaurants.find(r => r.restoLink === restaurantLink);
-  console.log(restaurantData)
 
   if (restaurantData) {
+    // Filter comments based on the restaurant name
+    const commentsForRestaurant = comments.filter(comment => comment.restoName === restaurantData.restoName);
 
-    console.log(comments)
-
-    // A match was found, render the page with the restaurantData
+    // Render the page with the restaurant data and filtered comments
     resp.render("estb-review", {
       layout: "estb-review-layout",
-      title: restaurantData.restoName, // Use the restaurant's name as the page title
-      commentData: comments,
-      restoData: [restaurantData],
+      title: restaurantData.restoName,
+      commentData: commentsForRestaurant, // Use filtered comments from res.locals
+      restoData: [restaurantData], // Wrap the restaurant data in an array to keep the structure consistent
+      loginData: loginInfo
     });
   } else {
     // No match was found, handle the error (e.g., render a 404 page)
