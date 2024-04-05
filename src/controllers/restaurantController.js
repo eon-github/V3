@@ -558,6 +558,52 @@ app.post('/get-user-info', (req, res) => {
   console.log("loginInfo", loginInfo.username)
 });
 
+app.post('/create-comment', async (req, res) => {
+  try {
+      // Extract data from request body
+      const { title, desc, restoName, foodRating, serviceRating, ambianceRating, overallRating, date } = req.body;
+
+      console.log(loginInfo.username)
+      console.log("Food Rating:", foodRating);
+      console.log("Service Rating:", serviceRating);
+      console.log("Ambiance Rating:", ambianceRating);
+      console.log("Overall Rating:", overallRating);
+      // Find the user in the database
+      const user = await userModel.findOne({ username: loginInfo.username });
+      console.log(user)
+      // Check if the user was found
+      if (!user) {
+          return res.status(404).json({ message: 'User not found' });
+      }
+
+
+      console.log("RestoName", restoName)
+      // Create a new comment document
+      const newComment = new commentModel({
+          name: user.username,
+          'user-img': user.avatar_img, // Include the avatar image from the user document
+          title: title,
+          restoName: restoName,
+          content: desc,
+          'food-rating': foodRating,
+          'service-rating': serviceRating,
+          'ambiance-rating': ambianceRating,
+          'overall-rating': overallRating,
+          date: date
+      });
+
+      // Save the new comment to the database
+      await newComment.save();
+      console.log('Comment saved properly:', newComment);
+
+      // Send a success response
+      res.status(201).json({ message: 'Comment created successfully', comment: newComment });
+  } catch (error) {
+      // Handle any errors that occur during the process
+      console.error('Error creating comment:', error);
+      res.status(500).json({ message: 'Error creating comment', error: error.message });
+  }
+});
 
 
 

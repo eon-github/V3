@@ -25,7 +25,6 @@ const Feedback = mongoose.model('feedback', feedbackSchema);
 //new Schema Updated as of March 30
 const commentsSchema = new mongoose.Schema({
     name: { type: String, required: true },
-    username: { type: String, required: true },
     title: { type: String, required: true },
     content: { type: String, required: true  },
     'food-rating': { type: Number, default: 5 },
@@ -36,7 +35,7 @@ const commentsSchema = new mongoose.Schema({
     numLike: { type: Number, default: 0 },
     numDislike: { type: Number, default: 0 },
     ownerReplyStatus: {type: Number, default: 0},
-    restoName: {type: String, requried: true},
+    restoName: {type: String, required: true},
     'overall-rating' : {type: Number, default: 5},
     'user-img': {type: String, required: true},
     isEdited : {type: Number, default: 0},

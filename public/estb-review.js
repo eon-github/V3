@@ -32,6 +32,20 @@
 // 	});
 // });
 
+const showPopup = document.querySelector('.post-popup');
+const popupContainer = document.querySelector('.post-popup-container');
+const closePopup = document.querySelector('.post-popup-close-button');
+
+showPopup.addEventListener('click', () => {
+	popupContainer.showModal();
+})
+
+closePopup.addEventListener('click', () => {
+	popupContainer.close();
+})
+
+
+
 function addModalHandlers(buttonClass, modalClass, closeClass, saveClass) {
     const buttons = document.querySelectorAll(buttonClass);
     const modals = document.querySelectorAll(modalClass);
@@ -110,7 +124,7 @@ function handleSubmit(event) {
   const requiredRatings = ['food', 'service', 'ambiance', 'overall'];
   const suffixes = [...Array(modals.length).keys()];
  
-  food-2
+  
   console.log(suffixes);
   for (const ratingType of requiredRatings) {
       let ratingProvided = false;
@@ -346,3 +360,111 @@ document.querySelectorAll('.del-button').forEach(button => {
 //         modal.showModal();
 //     }
 // }
+
+
+
+
+
+// Object to store the latest ratings for a single set of stars
+let latestRatingsSingle = {};
+
+// Function to handle star click for a single set of stars
+function handleStarClickSingle(stars, index, ratingType) {
+    stars.forEach((star, index2) => {
+        index >= index2 ? star.classList.add("active") : star.classList.remove("active");
+    });
+    
+    // Get the rating value (index + 1 because index is 0-based)
+    const ratingValue = index + 1;
+    
+    // Update the latest rating for the corresponding type
+    latestRatingsSingle[ratingType] = ratingValue;
+  
+    // Log the latest rating
+    console.log(`Latest ${ratingType} Rating:`, ratingValue);
+}
+
+// Initialize listeners for the single set of stars
+document.querySelectorAll('.stars').forEach(starsContainer => {
+    const stars = starsContainer.querySelectorAll('.fa-solid.fa-star');
+    const ratingType = starsContainer.id.split('-')[0]; // Get the type of rating
+    stars.forEach((star, index) => {
+        star.addEventListener("click", () => {
+            handleStarClickSingle(stars, index, ratingType);
+        });
+    });
+});
+
+// Function to send data to the server for creating a comment
+function createDataToServer(formData) {
+    // Example URL where you want to send the data
+    const url = '/create-comment';
+
+    // Fetch API to send data to the server
+    fetch(url, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(formData)
+    })
+    .then(response => {
+        if (response.ok) {
+            console.log('Comment created successfully.');
+            // Optionally, clear the form and update the UI
+        } else {
+            console.error('Failed to create comment');
+        }
+    })
+    .catch(error => {
+        // Handle error if the request fails
+        console.error('Error sending data:', error);
+    });
+}
+
+// Function to handle form submission for creating a comment
+function handleCreateCommentSubmit(event) {
+    event.preventDefault(); // Prevent default form submission
+
+    // Get form data
+    const formData = new FormData(event.target);
+   
+    console.log(formData.get('restonamehere'))
+    // Construct object with title, desc, and ratings
+    const data = {
+        title: formData.get('title'),
+        desc: formData.get('desc'),
+        restoName: formData.get('restonamehere'),
+        foodRating: latestRatingsSingle['food'],
+        serviceRating: latestRatingsSingle['service'],
+        ambianceRating: latestRatingsSingle['ambiance'],
+        overallRating: latestRatingsSingle['overall'],
+        date: new Date().toLocaleDateString()
+
+    };
+
+    console.log("CREATE DATA: ", data)
+
+    // Check if all ratings are provided
+    const requiredRatings = ['food', 'service', 'ambiance', 'overall'];
+    for (const ratingType of requiredRatings) {
+        if (!latestRatingsSingle.hasOwnProperty(ratingType)) {
+            alert(`Please provide a ${ratingType} rating.`);
+            return; // Prevent further execution
+        }
+    }
+
+    // Send data to the server
+    createDataToServer(data);
+
+    // Clear the form and reset ratings
+    // event.target.reset();
+    // latestRatingsSingle = {};
+    // document.querySelectorAll('.stars .fa-solid.fa-star').forEach(star => {
+    //     star.classList.remove("active");
+    // });
+}
+
+// Add event listener to the form
+const createCommentForm = document.querySelector('form[name="create-comment"]');
+createCommentForm.addEventListener('submit', handleCreateCommentSubmit);

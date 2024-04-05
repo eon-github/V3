@@ -73,7 +73,7 @@
     </div>
   </div>
 </div>
-{{/each}}
+
 
 <button class="post-popup">Post</button>
 <dialog class="post-popup-container">
@@ -84,6 +84,10 @@
         <img src="images/profile-pic.jpg" alt="" class="post-popup-profile-photo">
       </div>
       <div class="post-popup-rating">
+        <form name="create-comment" action="/create-comment" method="post">
+
+          <input type="hidden" name="restonamehere" value="{{restoName}}">
+       {{/each}}
         <div class="rating-random">
           <div class="rating-1">
             <div class="rating-food">
@@ -91,7 +95,7 @@
                 Food
               </div>
               <div class="rating-box">
-                <div class="stars">
+                <div class="stars" id="food-stars-99">
                   <i id="food" class="fa-solid fa-star"></i>
                   <i id="food" class="fa-solid fa-star"></i>
                   <i id="food" class="fa-solid fa-star"></i>
@@ -105,7 +109,7 @@
                 Ambiance
               </div>
               <div class="rating-box">
-                <div class="stars">
+                <div class="stars" id="ambiance-stars-99">
                   <i id="ambiance" class="fa-solid fa-star"></i>
                   <i id="ambiance" class="fa-solid fa-star"></i>
                   <i id="ambiance" class="fa-solid fa-star"></i>
@@ -122,7 +126,7 @@
               <div class="service-text-2">
                 Service
               </div>
-              <div class="rating-box">
+              <div class="rating-box" id="service-stars-99">
                 <div class="stars" id="service">
                   <i id="service" class="fa-solid fa-star"></i>
                   <i id="service" class="fa-solid fa-star"></i>
@@ -137,7 +141,7 @@
                 Overall
               </div>
               <div class="rating-box">
-                <div class="stars">
+                <div class="stars" id="overall-stars-99">
                   <i id="overall" class="fa-solid fa-star"></i>
                   <i id="overall" class="fa-solid fa-star"></i>
                   <i id="overall" class="fa-solid fa-star"></i>
@@ -157,8 +161,8 @@
           <span class="placeholder">Enter Title</span>
         </label>
       </div>
-      <div class="post-popup-desc">
-        <textarea class="textarea" placeholder="Type your comment here..."></textarea>
+      <div class="post-popup-desc" >
+        <textarea class="textarea" name="desc" placeholder="Type your comment here..."></textarea>
       </div>
     </div>
     <div class="post-popup-bottom-container">
@@ -170,10 +174,11 @@
           <input id="file-input" type="file" style="display: none;">
         </div>
         <div class="save-post">
-          <button class="save-post-popup">Post</button>
+          <button class="save-post-popup" type="submit">Post</button>
         </div>
       </div>
     </div>
+    </form>
   </div>
 </dialog>
 </div>
@@ -204,7 +209,7 @@
               {{name}}
             </div>
             <div class="review-username">
-              {{username}}
+              
             </div>
           </div>
         </div>
