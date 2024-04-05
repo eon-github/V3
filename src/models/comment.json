@@ -1,5 +1,5 @@
 [
-    {
+  {
       "name": "Neo",
       "username": "@neodgzm",
       "title": "Saks Lang Bro",
@@ -14,10 +14,10 @@
       "numDislike": 2,
       "ownerReplyStatus": 0,
       "restoName": "Chimmy",
-      "isEdited" : 0,
-      "date" : "1/24/2023"
-    },
-    {
+      "isEdited": 0,
+      "date": "1/24/2023"
+  },
+  {
       "name": "Fiona",
       "username": "@fiona_eats",
       "title": "Yumminess Galore!",
@@ -32,10 +32,10 @@
       "numDislike": 0,
       "ownerReplyStatus": 1,
       "restoName": "Chimmy",
-      "isEdited" : 0,
-      "date" : "1/23/2023"
-    },
-    {
+      "isEdited": 0,
+      "date": "1/23/2023"
+  },
+  {
       "name": "Neo",
       "username": "@neodgzm",
       "title": "Chimmy's Delight!",
@@ -49,11 +49,10 @@
       "numDislike": 1,
       "ownerReplyStatus": 0,
       "restoName": "Chimmy",
-      "isEdited" : 0,
-      "date" : "1/22/2023"
-      
-    },
-    {
+      "isEdited": 0,
+      "date": "1/22/2023"
+  },
+  {
       "name": "Sophie",
       "username": "@sophiesnacks",
       "title": "Chimmy's Bliss!",
@@ -68,10 +67,10 @@
       "numDislike": 0,
       "ownerReplyStatus": 0,
       "restoName": "Dimsum Treats",
-      "isEdited" : 0,
-      "date" : "1/21/2023"
-    },
-    {
+      "isEdited": 0,
+      "date": "1/21/2023"
+  },
+  {
       "name": "Ricky",
       "username": "@rickyeatsph",
       "title": "Chimmy's Flavor Fiesta!",
@@ -86,10 +85,10 @@
       "numDislike": 0,
       "ownerReplyStatus": 0,
       "restoName": "Dimsum Treats",
-      "isEdited" : 0,
-      "date" : "1/20/2023"
-    },
-    {
+      "isEdited": 0,
+      "date": "1/20/2023"
+  },
+  {
       "name": "Lina",
       "username": "@linatastes",
       "title": "Chimmy's Delightful Treats!",
@@ -104,10 +103,10 @@
       "numDislike": 0,
       "ownerReplyStatus": 0,
       "restoName": "Jus & Jerry's",
-      "isEdited" : 0,
-      "date" : "1/19/2023"
-    },
-    {
+      "isEdited": 0,
+      "date": "1/19/2023"
+  },
+  {
       "name": "Ali",
       "username": "@aliyums",
       "title": "Chimmy's Fantastic Finds!",
@@ -122,10 +121,10 @@
       "numDislike": 0,
       "ownerReplyStatus": 0,
       "restoName": "24 Chicken",
-      "isEdited" : 0,
-      "date" : "1/7/2023"
-    },
-    {
+      "isEdited": 0,
+      "date": "1/7/2023"
+  },
+  {
       "name": "Mia",
       "username": "@miatreats",
       "title": "Chimmy's Delightful Surprises!",
@@ -140,10 +139,10 @@
       "numDislike": 0,
       "ownerReplyStatus": 0,
       "restoName": "24 Chicken",
-      "isEdited" : 0,
-      "date" : "1/8/2023"
-    },
-    {
+      "isEdited": 0,
+      "date": "1/8/2023"
+  },
+  {
       "name": "Gab",
       "username": "@gabfoods",
       "title": "Chimmy's Heaven on Earth!",
@@ -158,8 +157,162 @@
       "numDislike": 0,
       "ownerReplyStatus": 0,
       "restoName": "Dimsum Treats",
-      "isEdited" : 0,
-      "date" : "1/9/2023"
-    }
-  ]
+      "isEdited": 0,
+      "date": "1/9/2023"
+  },
+  {
+      "name": "Sarah",
+      "username": "@saraheats",
+      "title": "Chimmy's Sweet Escape!",
+      "content": "Chimmy's yogurt selection is a sweet escape from the ordinary! Their dulce de leche yogurt topped with caramelized nuts is a flavor explosion. The ambiance is cozy, making it the perfect spot for a solo treat or a casual hangout with friends. Can't wait to try more of their delicious creations!",
+      "food-rating": 4,
+      "service-rating": 4,
+      "ambiance-rating": 5,
+      "overall-rating": 4,
+      "date": "1/10/2023"
+  },
+  {
+      "name": "Max",
+      "username": "@maxeats",
+      "title": "Chimmy's Flavor Fiesta Continues!",
+      "content": "Chimmy's yogurt continues to impress with its flavor fiesta! Their seasonal pumpkin spice yogurt with graham cracker crumbs is a fall delight. The ambiance is always lively, and the staff is friendly and accommodating. Another fantastic visit to Chimmy's!",
+      "food-rating": 5,
+      "service-rating": 5,
+      "ambiance-rating": 4,
+      "overall-rating": 5,
+      "date": "1/11/2023"
+  },
+  {
+      "name": "Nate",
+      "username": "@nategrub",
+      "title": "Toribox's Crispy Perfection!",
+      "content": "Toribox never disappoints with its crispy perfection! Their signature fried chicken is always juicy and flavorful, with the perfect crunch. The cozy atmosphere and friendly staff make it a go-to spot for a quick and delicious meal. Can't get enough of Toribox!",
+      "food-rating": 5,
+      "service-rating": 4,
+      "ambiance-rating": 3,
+      "overall-rating": 5,
+      "date": "1/12/2023"
+  },
+  {
+      "name": "Ella",
+      "username": "@ellaeats",
+      "title": "Toribox's Flavor Explosion!",
+      "content": "Toribox knows how to create a flavor explosion with their spicy fried chicken! The heat level is just right, and each bite is packed with flavor. The laid-back vibe of the restaurant makes it a great spot to hang out with friends. Toribox never disappoints!",
+      "food-rating": 4,
+      "service-rating": 3,
+      "ambiance-rating": 4,
+      "overall-rating": 4,
+      "date": "1/13/2023"
+  },
+  {
+      "name": "Jake",
+      "username": "@jakeeats",
+      "title": "24 Chicken's Juicy Goodness!",
+      "content": "24 Chicken serves up juicy goodness with every bite! Their classic fried chicken is always perfectly seasoned and cooked to perfection. The casual atmosphere and quick service make it a convenient choice for a satisfying meal. 24 Chicken never fails to hit the spot!",
+      "food-rating": 5,
+      "service-rating": 4,
+      "ambiance-rating": 3,
+      "overall-rating": 5,
+      "date": "1/14/2023"
+  },
+  {
+      "name": "Sara",
+      "username": "@sarasnacks",
+      "title": "24 Chicken's Crispy Indulgence!",
+      "content": "24 Chicken's crispy indulgence is unbeatable! Their honey garlic fried chicken is a flavor sensation, with the perfect balance of sweet and savory. The cozy ambiance and friendly staff make it a favorite spot for a casual meal. Always a delightful experience at 24 Chicken!",
+      "food-rating": 4,
+      "service-rating": 5,
+      "ambiance-rating": 4,
+      "overall-rating": 4,
+      "date": "1/15/2023"
+  },
+  {
+      "name": "Sophia",
+      "username": "@sophiaeats",
+      "title": "Tea Cup's Tranquil Retreat!",
+      "content": "Tea Cup offers a tranquil retreat with its soothing teas and cozy ambiance. Their jasmine green tea is a personal favorite, perfectly fragrant and calming. The staff is knowledgeable and always ready to recommend the perfect brew. A wonderful spot for tea enthusiasts!",
+      "food-rating": 5,
+      "service-rating": 5,
+      "ambiance-rating": 5,
+      "overall-rating": 5,
+      "date": "1/16/2023"
+  },
+  {
+      "name": "Alex",
+      "username": "@alexeats",
+      "title": "Tea Cup's Serene Escape!",
+      "content": "Tea Cup provides a serene escape from the hustle and bustle of the city. Their Earl Grey tea with lavender is a delightful blend that soothes the senses. The ambiance is calming, and the staff is attentive without being intrusive. A perfect spot for a peaceful afternoon!",
+      "food-rating": 4,
+      "service-rating": 4,
+      "ambiance-rating": 5,
+      "overall-rating": 4,
+      "date": "1/17/2023"
+  },
+  {
+      "name": "Chris",
+      "username": "@chriseats",
+      "title": "Jus & Jerry's Refreshing Delight!",
+      "content": "Jus & Jerry's never fails to delight with its refreshing beverages! Their watermelon juice is the perfect thirst-quencher on a hot day, bursting with natural sweetness. The cozy atmosphere and friendly staff make it a top choice for a quick pick-me-up. Always a pleasant experience at Jus & Jerry's!",
+      "food-rating": 5,
+      "service-rating": 4,
+      "ambiance-rating": 4,
+      "overall-rating": 5,
+      "date": "1/18/2023"
+  },
+  {
+      "name": "Eva",
+      "username": "@evaeats",
+      "title": "Jus & Jerry's Tropical Paradise!",
+      "content": "Jus & Jerry's transports me to a tropical paradise with its exotic fruit juices! Their pineapple mango smoothie is a tropical delight, perfectly blended and refreshing. The laid-back vibe of the café makes it a great spot to unwind with a delicious drink. Can't get enough of Jus & Jerry's!",
+      "food-rating": 4,
+      "service-rating": 5,
+      "ambiance-rating": 4,
+      "overall-rating": 4,
+      "date": "1/19/2023"
+  },
+  {
+      "name": "Ryan",
+      "username": "@ryaneats",
+      "title": "Big Boss's Flavor Explosion!",
+      "content": "Big Boss delivers a flavor explosion with its bold and spicy dishes! Their fiery hotpot is not for the faint of heart, but if you can handle the heat, it's incredibly satisfying. The bustling atmosphere and quick service make it a great spot for a group gathering. Big Boss never disappoints!",
+      "food-rating": 5,
+      "service-rating": 4,
+      "ambiance-rating": 4,
+      "overall-rating": 5,
+      "date": "1/20/2023"
+  },
+  {
+      "name": "Liam",
+      "username": "@liameats",
+      "title": "Big Boss's Sizzling Success!",
+      "content": "Big Boss is a sizzling success with its flavorful stir-fries and hotpots! Their mapo tofu is a personal favorite, packed with bold spices and tender tofu. The energetic vibe of the restaurant makes it a fun spot for a lively meal with friends. Always a fantastic experience at Big Boss!",
+      "food-rating": 4,
+      "service-rating": 5,
+      "ambiance-rating": 5,
+      "overall-rating": 4,
+      "date": "1/21/2023"
+  },
+  {
+      "name": "Hannah",
+      "username": "@hannaheats",
+      "title": "Dimsum Treats' Culinary Delight!",
+      "content": "Dimsum Treats never fails to delight with its culinary creations! Their shrimp dumplings are a standout, with plump and juicy filling wrapped in delicate dough. The traditional ambiance and attentive staff make it a top choice for authentic dim sum. Always a delightful experience at Dimsum Treats!",
+      "food-rating": 5,
+      "service-rating": 4,
+      "ambiance-rating": 4,
+      "overall-rating": 5,
+      "date": "1/22/2023"
+  },
+  {
+      "name": "Olivia",
+      "username": "@oliviaeats",
+      "title": "Dimsum Treats' Dimsum Dream!",
+      "content": "Dimsum Treats is a dimsum dream come true! Their barbecue pork buns are irresistible, with savory filling encased in fluffy steamed buns. The bustling atmosphere and quick service make it a great spot for a casual dim sum feast. Can't get enough of Dimsum Treats!",
+      "food-rating": 4,
+      "service-rating": 5,
+      "ambiance-rating": 4,
+      "overall-rating": 4,
+      "date": "1/23/2023"
+  }
+]
   
