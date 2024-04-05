@@ -545,8 +545,17 @@ app.get("/:restaurantLink", getRestaurantData, async (req, resp) => {
     });
   } else {
     // No match was found, handle the error (e.g., render a 404 page)
-    resp.status(404).render("not-found-page");
+    // resp.status(404).render("not-found-page");
   }
+});
+
+app.post('/get-user-info', (req, res) => {
+    console.log("loginInfo", loginInfo.username)
+  res.json({
+      username: loginInfo.username
+  });
+
+  console.log("loginInfo", loginInfo.username)
 });
 
 
