@@ -8,13 +8,14 @@
       "service-rating": 4,
       "ambiance-rating": 2,
       "overall-rating": 4,
-      "date": "February 07, 2024",
       "comment-img": "./images/chimmy-review.jpg",
       "user-img": "/images/duck.jpg",
       "numLike": 5,
       "numDislike": 2,
       "ownerReplyStatus": 0,
-      "restoName": "Chimmy"
+      "restoName": "Chimmy",
+      "isEdited" : 0,
+      "date" : "1/24/2023"
     },
     {
       "name": "Fiona",
@@ -25,13 +26,14 @@
       "service-rating": 3,
       "ambiance-rating": 5,
       "overall-rating": 4,
-      "date": "March 01, 2024",
       "comment-img": "./images/chimmy-review.jpg",
       "user-img": "/images/duck.jpg",
       "numLike": 10,
       "numDislike": 0,
       "ownerReplyStatus": 1,
-      "restoName": "Chimmy"
+      "restoName": "Chimmy",
+      "isEdited" : 0,
+      "date" : "1/23/2023"
     },
     {
       "name": "Neo",
@@ -41,14 +43,15 @@
       "food-rating": 2,
       "service-rating": 3,
       "ambiance-rating": 2,
-      "overall-rating": 1,
-      "date": "February 20, 2024",
       "comment-img": "./images/chimmy-review.jpg",
       "user-img": "/images/duck.jpg",
       "numLike": 8,
       "numDislike": 1,
       "ownerReplyStatus": 0,
-      "restoName": "Chimmy"
+      "restoName": "Chimmy",
+      "isEdited" : 0,
+      "date" : "1/22/2023"
+      
     },
     {
       "name": "Sophie",
@@ -59,13 +62,14 @@
       "service-rating": 3,
       "ambiance-rating": 5,
       "overall-rating": 4,
-      "date": "February 15, 2024",
       "comment-img": "./images/chimmy-review.jpg",
       "user-img": "/images/duck.jpg",
       "numLike": 6,
       "numDislike": 0,
       "ownerReplyStatus": 0,
-      "restoName": "Dimsum Treats"
+      "restoName": "Dimsum Treats",
+      "isEdited" : 0,
+      "date" : "1/21/2023"
     },
     {
       "name": "Ricky",
@@ -76,13 +80,14 @@
       "service-rating": 1,
       "ambiance-rating": 2,
       "overall-rating": 5,
-      "date": "March 05, 2024",
       "comment-img": "./images/chimmy-review.jpg",
       "user-img": "/images/duck.jpg",
       "numLike": 7,
       "numDislike": 0,
       "ownerReplyStatus": 0,
-      "restoName": "Dimsum Treats"
+      "restoName": "Dimsum Treats",
+      "isEdited" : 0,
+      "date" : "1/20/2023"
     },
     {
       "name": "Lina",
@@ -93,13 +98,14 @@
       "service-rating": 5,
       "ambiance-rating": 5,
       "overall-rating": 3,
-      "date": "February 28, 2024",
       "comment-img": "./images/chimmy-review.jpg",
       "user-img": "/images/duck.jpg",
       "numLike": 9,
       "numDislike": 0,
       "ownerReplyStatus": 0,
-      "restoName": "Jus & Jerry's"
+      "restoName": "Jus & Jerry's",
+      "isEdited" : 0,
+      "date" : "1/19/2023"
     },
     {
       "name": "Ali",
@@ -110,13 +116,14 @@
       "service-rating": 3,
       "ambiance-rating": 5,
       "overall-rating": 3,
-      "date": "February 25, 2024",
       "comment-img": "./images/chimmy-review.jpg",
       "user-img": "/images/duck.jpg",
       "numLike": 11,
       "numDislike": 0,
       "ownerReplyStatus": 0,
-      "restoName": "24 Chicken"
+      "restoName": "24 Chicken",
+      "isEdited" : 0,
+      "date" : "1/7/2023"
     },
     {
       "name": "Mia",
@@ -127,13 +134,14 @@
       "service-rating": 1,
       "ambiance-rating": 2,
       "overall-rating": 5,
-      "date": "March 10, 2024",
       "comment-img": "./images/chimmy-review.jpg",
       "user-img": "/images/duck.jpg",
       "numLike": 13,
       "numDislike": 0,
       "ownerReplyStatus": 0,
-      "restoName": "24 Chicken"
+      "restoName": "24 Chicken",
+      "isEdited" : 0,
+      "date" : "1/8/2023"
     },
     {
       "name": "Gab",
@@ -144,13 +152,14 @@
       "service-rating": 1,
       "ambiance-rating": 5,
       "overall-rating": 2,
-      "date": "March 13, 2024",
       "comment-img": "./images/chimmy-review.jpg",
       "user-img": "/images/duck.jpg",
       "numLike": 15,
       "numDislike": 0,
       "ownerReplyStatus": 0,
-      "restoName": "Dimsum Treats"
+      "restoName": "Dimsum Treats",
+      "isEdited" : 0,
+      "date" : "1/9/2023"
     }
   ]
   

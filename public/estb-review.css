@@ -625,11 +625,11 @@ hr {
 }
 
 .settings {
-  width: 40%;
+  width: 100%;
   font-family: "Inter";
   font-size: 18px;
   color: #8e8888;
-  margin-left: 300px;
+  margin-left: 800px;
 }
 .settings-photo {
   width: 55px;
@@ -958,10 +958,12 @@ hr {
   outline: none;
   background-color: white;
   cursor: pointer;
+
 }
 
 .dropdown {
   display: inline-block;
+  
 }
 .dropdown button {
   background-color: white;
@@ -975,12 +977,13 @@ hr {
   display: none;
   position: absolute;
   background-color: white;
-  min-width: 100px;
+  min-width: 70px;
   box-shadow: 2px 2px 5px hsla(0, 0%, 0%, 0.8);
-  margin-left: 100px;
+
 }
 .dropdown:hover .content {
   display: block;
+
 }
 
 .edit-button,
@@ -988,7 +991,7 @@ hr {
   border: none;
   outline: none;
   cursor: pointer;
-  font-size: 26px;
+  font-size: 15px;
   font-family: "Inter";
   font-weight: bold;
 }
@@ -998,7 +1001,7 @@ hr {
   border: none;
   outline: none;
   cursor: pointer;
-  font-size: 26px;
+  font-size: 15px;
   font-family: "Inter";
   font-weight: bold;
 }
@@ -1162,7 +1165,6 @@ AKLSDJAKLDAJKDAJALKDJ .edit-popup-profile-photo {
 .settings-button {
   border: none;
   outline: none;
-  margin-left: 100px;
 }
 
 .dropdown-1 button {
@@ -1187,9 +1189,8 @@ AKLSDJAKLDAJKDAJALKDJ .edit-popup-profile-photo {
   display: none;
   position: absolute;
   background-color: lightgrey;
-  min-width: 100px;
+  min-width: 70px;
   box-shadow: 2px 2px 5px hsla(0, 0%, 0%, 0.8);
-  margin-left: 100px;
 }
 
 .dropdown-1:hover .content {
@@ -1942,4 +1943,16 @@ input::placeholder{
       width: 104%;
     }
   
-    /* END HEADER
+    /* END HEADER */
+
+      .bottom-top-right-edited{
+    color: gray;
+    font-size: 12px;
+
+
+  }
+  .bottom-top-right-date{
+    font-size: 17px;
+
+  
+  }

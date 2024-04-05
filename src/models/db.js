@@ -5,7 +5,7 @@ const userSchema = new mongoose.Schema({
     username: { type: String, required: true },
     email: {type: String, required: true},
     password: { type: String, required: true },
-    avatar_img: { type: String, default:  0},
+    avatar_img: { type: String, default: "https://www.shutterstock.com/image-vector/user-profile-icon-vector-avatar-600nw-2247726673.jpg" },
     description: { type: String, required: true },
     // likes: [{post: ObjectID, _id: false}] 
 });
@@ -38,7 +38,9 @@ const commentsSchema = new mongoose.Schema({
     ownerReplyStatus: {type: Number, default: 0},
     restoName: {type: String, requried: true},
     'overall-rating' : {type: Number, default: 5},
-    'user-img': {type: String, required: true}
+    'user-img': {type: String, required: true},
+    isEdited : {type: Number, default: 0},
+    date : {type: String, required: true}
 });
 
 const Comment = mongoose.model('comments', commentsSchema);

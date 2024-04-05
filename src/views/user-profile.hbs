@@ -22,26 +22,23 @@
                                             <div id="myModal" class="modal">
 
                                             <!-- Modal content -->
-                                        <div class="modal-content">
-                                            <span class="close">×</span>
-                                            <!-- Added enctype attribute for file upload -->
-                                            <form id="editProfileForm" enctype="multipart/form-data">
-                                                <img id="profilePic" src="{{avatar_img}}" alt="Profile Picture" style="width:100px;height:100px;"><br>
+                                            <div class="modal-content">
+                                                <span class="close">×</span>
+                                                <form name ="update-user" action="update-user" method="post">
+                                                <img id="profilePic" src="images/profile-pic.jpg" alt="Profile Picture" style="width:100px;height:100px;"><br>
                                                 <label for="img">Select image:</label>
                                                 <input type="file" id="img" name="img" accept="image/*"><br>
                                                 <label for="username">Username:</label><br>
                                                 <input type="text" id="username" name="username"><br>
-                                                <label for="email">Email:</label><br>
-                                                <input type="email" id="email" name="email"><br>
-                                                <label for="password">Password:</label><br>
-                                                <input type="password" id="password" name="password"><br>
+                                                <label for="fname">First Name:</label><br>
+                                                <input type="text" id="fname" name="fname"><br>
+                                                <label for="lname">Last Name:</label><br>
+                                                <input type="text" id="lname" name="lname"><br>
                                                 <label for="desc">Short Description:</label><br>
-                                                <textarea id="desc" name="description"></textarea><br>
-                                                <!-- Changed to a submit input for proper form submission -->
+                                                <textarea id="desc" name="desc"></textarea><br>
                                                 <input type="submit" value="Save Changes">
-                                            </form>
-                                            <button id="deleteAccountBtn" style="background-color: red; color: white;">Delete Account</button>
-                                        </div>
+                                                </form>
+                                            </div>
                                             </div>
                                         </div>
                                     </div>
@@ -71,7 +68,7 @@
                             <div class="bottom">
                             {{#each commentData}}
                             
-                                <div class="review-container">
+                                <div class="review-container" id="review-{{@index}}">
                                     <div class="review">
                                         
                                         <div class="bottom-left-container">
@@ -108,6 +105,11 @@
                                                                                 more_horiz
                                                                                 </span>
                                                                         </button>
+
+
+                                                                        
+
+
                                                                         <div class="content">
                                                                             
                                                                         <button class="edit-button">Edit</button>
@@ -188,12 +190,12 @@
                                                                             <div class="post-popup-middle">
                                                                                 <div class="post-popup-title">
                                                                                 <label class="custom-field" for="title">
-                                                                                    <input type="text" id="title" name="title" required>
-                                                                                    <span class="placeholder">Enter Title</span>
+                                                                                    <input type="text" id="title" name="title" required value ="{{title}}">
+                                                                                    <span class="placeholder"></span>
                                                                                 </label>
                                                                                 </div>
                                                                                 <div class="post-popup-desc">
-                                                                                <textarea class="textarea" name="desc" id="desc" placeholder="Type your comment here..."></textarea>
+                                                                                <textarea class="textarea" name="desc" id="desc" >{{content}}</textarea>
                                                                                 </div>
                                                                             </div>
                                                                             <div class="post-popup-bottom-container">
@@ -219,7 +221,13 @@
                                                                             <div class="delete-header">DELETE POST?</div>
                                                                             <div class="delete-middle">This can't be undone and it will be removed from your profile, the timeline of any accounts that follow you, and from search results.</div>
                                                                             <div class="delete-bottom">
-                                                                                <button class="confirm-del-button">Delete</button>
+                                                                                <form id="deleteCommentForm" name="delCommentForm" data-index="{{@index}}" action="/delete-comment">
+                                                                                    <!-- Hidden input field to store the comment ID -->
+                                                                                    <input type="hidden" id="commentId-{{@index}}" name="deleteId" value="{{_id}}">
+                                                                                    
+                                                                                    <!-- Your delete button -->
+                                                                                    <button class="confirm-del-button" value="submit">Delete Comment</button>
+                                                                                </form>
                                                                                 <button class="cancel-del-button">Cancel</button>
                                                                             </div>
                                                                             </div>
@@ -238,8 +246,16 @@
 
                                                                 </div>
                                                                 <div class="bottom-top-right-date-container">
-                                                                    <div class="bottom-top-right-date">
-                                                                        February 9, 2024
+                                                                    
+                                                                    <div class="bottom-top-right-edited" id="edited-{{@index}}">
+                                                                        {{#if isEdited}}
+                                                                        edited
+                                                                        {{/if}}
+                                                                    </div>
+                                                                    
+                                                                    <div class="bottom-top-right-date" id="date-{{@index}}">
+                                                                        {{date}}
+                                                                    
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -248,12 +264,12 @@
                                                 </div>
                                                 <div class="bottom-left-middle-container">
                                                     <div class="bottom-left-middle-title-container">
-                                                        <div class="bottom-left-middle-title">
+                                                        <div class="bottom-left-middle-title" id="title-{{@index}}">
                                                             {{title}}
                                                         </div>
                                                     </div>
                                                     <div class="bottom-left-middle-description-container">
-                                                        <div class="bottom-left-middle-description">
+                                                        <div class="bottom-left-middle-description" id="desc-{{@index}}">
                                                             {{content}}
                                                         </div>
                                                     </div>
@@ -266,7 +282,7 @@
                                                               Food
                                                             </div>
                                                             
-                                                            <div class="stars-rating">
+                                                            <div class="stars-rating" id="food-{{@index}}">
                                                                 {{#each food-stars}}
                                                               <img src="images/star.png" alt="" class="stars-1">
                                                                 {{/each}}
@@ -274,7 +290,7 @@
                                                           </div>
                                                           <div class="rating-ambiance">
                                                             Ambiance
-                                                            <div class="stars-rating">
+                                                            <div class="stars-rating" id="ambiance-{{@index}}">
                                                               {{#each ambiance-stars}}
                                                               <img src="images/star.png" alt="" class="stars-1">
                                                                 {{/each}}
@@ -286,7 +302,7 @@
                                                         <div class="rating-2">
                                                           <div class="rating-service">
                                                             Service
-                                                            <div class="stars-rating">
+                                                            <div class="stars-rating" id="service-{{@index}}">
                                                               {{#each service-stars}}
                                                               <img src="images/star.png" alt="" class="stars-1">
                                                                 {{/each}}
@@ -296,7 +312,7 @@
                                                             <div class="overall-text">
                                                               Overall
                                                             </div>
-                                                            <div class="stars-rating">
+                                                            <div class="stars-rating" id="overall-{{@index}}">
                                                               {{#each overall-stars}}
                                                               <img src="images/star.png" alt="" class="stars-1">
                                                                 {{/each}}
@@ -319,23 +335,20 @@
                                                     </div>
                                                     <div class="vote">
                                         
-                                <div class="post-ratings-container">
-                                    <div id="editProfileForm" class="post-rating">
-                                        <span class="helpful">Helpful? </span>
-                                        <button class="post-rating-button material-icons thumbs-up-btn">thumb_up</button>
-                                        <span class="post-rating-count-like" id="count-like">{{numLike}}</span>
-                                    </div>                
-                                    <div class="post-rating">
-                                        <button class="post-rating-button material-icons thumbs-down-btn">thumb_down</button>
-                                        <span class="post-rating-count-dislike" id="count-dislike">{{numDislike}}</span>
-                                    </div>
-
-                                </div>
+                                                      <div class="post-ratings-container">
+                                                        <div class="post-rating">
+                                                         <span class="helpful">Helpful? </span>  
+                                                          <span class="post-rating-button material-icons">thumb_up</span>
+                                                          <span class="post-rating-count">{{numLike}}</span>
+                                                        </div>
+                                                        
+                                                        <div class="post-rating">
+                                                          <span class="post-rating-button material-icons">thumb_down</span>
+                                                          <span class="post-rating-count">{{numDislike}}</span>
+                                                        </div>
+                                                      </div>
                                         
-                                    
-
-
-
+                                        
                                         
                                                       
                                                     </div>

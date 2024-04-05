@@ -317,7 +317,7 @@ body, input, textarea, button {
 
 
 .rating-food, .rating-service, .rating-ambiance, .rating-overall{
-  width: 250px;
+  width: 300px;
   display:flex;
 }
 
@@ -390,9 +390,6 @@ body, input, textarea, button {
   margin-right: 3px;
   cursor: pointer;
   color: #555555;
-}
-.post-rating-button.clicked {
-  color: #ffa800; /* Change color to green when clicked */
 }
 
 .post-rating:not(.post-rating-selected) > .post-rating-button:hover {
@@ -986,7 +983,7 @@ footer > h1 {
   
   .post-popup-first-row {
     display: flex;
-    height: 300px;
+    height: 100px;
   }
   
   .post-popup-container,
@@ -1014,20 +1011,20 @@ footer > h1 {
   .post-popup-title,
   .owner-popup-title {
     font-family: "Outfit";
-    font-size: 36px;
-    margin-bottom: 10px;
+    font-size: 28px;
+    margin-bottom: 5px;
   }
   
   .post-popup-desc,
   .owner-popup-desc {
     font-family: "Outfit";
-    font-size: 18px;
+    font-size: 15px;
   }
   
   .post-popup-middle {
     margin-left: 14%;
     margin-right: 2%;
-    margin-top: -150px;
+    
   }
   
   .addphoto {
@@ -1040,7 +1037,7 @@ footer > h1 {
   .post-popup-bottom-container {
     border-top: black solid;
     border-width: 1px;
-    margin-top: 5%;
+    margin-top: 2%;
   }
   
   .post-popup-bottom {
@@ -1059,7 +1056,7 @@ footer > h1 {
     color: white;
     font-family: "Inter";
     font-weight: bold;
-    margin-left: 970px;
+    margin-left: 700px;
   }
   .save-post-popup-edit {
     padding: 18px 40px;
@@ -1073,13 +1070,13 @@ footer > h1 {
     color: white;
     font-family: "Inter";
     font-weight: bold;
-    margin-left: 970px;
+    margin-left: 700px;
   }
   
   .dropdown button {
     border: none;
     outline: none;
-    background-color: white;
+    background-color: antiquewhite;
     cursor: pointer;
   }
   
@@ -1087,7 +1084,7 @@ footer > h1 {
     display: inline-block;
   }
   .dropdown button {
-    background-color: white;
+    background-color: antiquewhite;
     color: black;
     border: none;
     cursor: pointer;
@@ -1097,10 +1094,10 @@ footer > h1 {
   .dropdown .content {
     display: none;
     position: absolute;
-    background-color: white;
-    min-width: 100px;
+    background-color: antiquewhite;
+    min-width: 40px;
     box-shadow: 2px 2px 5px hsla(0, 0%, 0%, 0.8);
-    margin-left: 100px;
+    margin-left: 170px;
   }
   .dropdown:hover .content {
     display: block;
@@ -1111,7 +1108,7 @@ footer > h1 {
     border: none;
     outline: none;
     cursor: pointer;
-    font-size: 26px;
+    font-size: 15px;
     font-family: "Inter";
     font-weight: bold;
   }
@@ -1121,14 +1118,14 @@ footer > h1 {
     border: none;
     outline: none;
     cursor: pointer;
-    font-size: 26px;
+    font-size: 15px;
     font-family: "Inter";
     font-weight: bold;
   }
   
   AKLSDJAKLDAJKDAJALKDJ .edit-popup-profile-photo {
-    width: 88px;
-    height: 88px;
+    width: 66px;
+    height: 66px;
     border-radius: 50px;
     margin-top: 15px;
     margin-left: 30px;
@@ -1136,14 +1133,14 @@ footer > h1 {
   
   .edit-popup-first-row {
     display: flex;
-    height: 300px;
+    height: 150px;
     margin-top: 1%;
   }
   
   .edit-popup-container,
   .edit-popup-container-2 {
-    width: 1200px;
-    height: 675px;
+    width: 1050px;
+    height: 555px;
     justify-content: center;
     border: solid #ffa800;
     border-radius: 50px;
@@ -1163,13 +1160,13 @@ footer > h1 {
   
   .edit-popup-title {
     font-family: "Outfit";
-    font-size: 36px;
+    font-size: 20px;
     margin-bottom: 10px;
   }
   
   .edit-popup-desc {
     font-family: "Outfit";
-    font-size: 18px;
+    font-size: 10px;
   }
   
   .edit-popup-middle {
@@ -1200,7 +1197,7 @@ footer > h1 {
   }
   
   .edit-popup-header {
-    font-size: 40px;
+    font-size: 20px;
     font-weight: bold;
     margin-left: 42%;
     margin-bottom: 1%;
@@ -1306,7 +1303,7 @@ footer > h1 {
     display: none;
     position: absolute;
     background-color: lightgrey;
-    min-width: 100px;
+    min-width: 40px;
     box-shadow: 2px 2px 5px hsla(0, 0%, 0%, 0.8);
     margin-left: 100px;
   }
@@ -1484,7 +1481,6 @@ footer > h1 {
   .custom-field{
     position: relative;
     font-size: 36px;
-    padding-top: 60px;
     margin-bottom: 30px;
   }
   
@@ -1516,8 +1512,8 @@ footer > h1 {
     outline: none;
     font-family: "Inter";
     font-weight: 400;
-    font-size: 20px;
-    line-height: 1.4;
+    font-size: 15px;
+    line-height: 1;
     width: 850px;
     height: 150px;
     transition: all 0.2s;
@@ -1566,13 +1562,33 @@ footer > h1 {
     color: #ff9c1a;
   }
   
+  .food-text-2{
+    margin-top: 10px;
+    padding-right: 31px;
+  }
+
+
+  .ambiance-text-2{
+    padding-left: 100px;
+    margin-top: 2px;
+    padding-right: 4px;
+  }
+
+  .overall-text-2{
+    padding-left: 100px;
+    padding-right: 33px;
+    margin-top: 5px;
+  }
+
+  .service-text-2{
+    padding-right: 10px;
+    margin-top: 2px;
+  }
   
   .food-text-2, .overall-text-2, .ambiance-text-2, .service-text-2{
     width: 150px;
   }
-  .food-text-2, .service-text-2{
-    width: 110px;
-  }
+
   
   .addphoto {
     cursor: pointer;
@@ -1733,7 +1749,7 @@ footer > h1 {
   .settings-button {
     border: none;
     outline: none;
-    margin-left: 100px;
+    margin-left: 190px;
     background-color: antiquewhite;
     color: antiquewhite;
   }
@@ -1744,3 +1760,21 @@ footer > h1 {
 
   }
   /* END MOF EDIT DELETE MODAL */
+
+  .bottom-top-right-edited{
+    color: gray;
+    font-size: 12px;
+    text-align: right;
+
+  }
+  .bottom-top-right-date{
+    font-size: 17px;
+    text-align: right;
+  
+  
+  }
+
+  #title{
+    width: 400px;
+    font-size: 22px;
+  }
