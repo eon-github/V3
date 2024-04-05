@@ -568,9 +568,23 @@ app.get("/:restaurantLink", getRestaurantData, async (req, resp) => {
           loginData: loginInfo
       });
   } else {
+<<<<<<< HEAD
       // No match was found, handle the error (e.g., render a 404 page)
       resp.status(404).render("not-found-page");
+=======
+    // No match was found, handle the error (e.g., render a 404 page)
+    // resp.status(404).render("not-found-page");
+>>>>>>> b72dd24ae02e1eabc58a37b95cb365d11c568608
   }
+});
+
+app.post('/get-user-info', (req, res) => {
+    console.log("loginInfo", loginInfo.username)
+  res.json({
+      username: loginInfo.username
+  });
+
+  console.log("loginInfo", loginInfo.username)
 });
 
 

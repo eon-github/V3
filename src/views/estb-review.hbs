@@ -191,7 +191,7 @@
   </div>
 </div>
 {{#each commentData}}
-<div class="review">
+<div class="review" id="review-{{@index}}">
   <div class="review-whole">
     <div class="review-left">
       <div class="review-left-top">
@@ -200,7 +200,7 @@
             <img src="{{user-img}}" alt="" class="review-profile-photo">
           </div>
           <div class="review-left-top-profile-text">
-            <div class="review-profile-name">
+            <div class="review-profile-name-{{@index}}">
               {{name}}
             </div>
             <div class="review-username">
@@ -212,7 +212,7 @@
           <div class="dropdown">
             <button class="settings-button"> <img src="https://i.stack.imgur.com/twIm6.png" class="settings-photo"></button>
             <div class="content">
-              <button class="edit-button">Edit</button>
+              <button class="edit-button" type="checkEdit" data-index="{{@index}}">Edit</button>
               <dialog class="edit-popup-container">
                 <div class="edit-popup-box">
                   <div class="edit-toprow">
@@ -313,7 +313,7 @@
                   </form>
                 </div>
               </dialog>
-              <button class="del-button">Delete</button>
+              <button class="del-button" data-index="{{@index}}">Delete</button>
               <dialog class="delete-popup-container">
                 <div class="delete-whole">
                   <div class="delete-header">DELETE POST?</div>
@@ -352,7 +352,7 @@
         <div class="rating-1">
           <div class="rating-food">
             <div class="food-text">
-              Food12313
+              Food
             </div>
             <div class="stars-rating" id="food-{{@index}}">
               {{#each food-stars}}
