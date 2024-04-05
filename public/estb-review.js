@@ -236,6 +236,7 @@ function deleteOnSubmit(event) {
             // Optionally, update UI or perform other actions
             // For example, remove the deleted comment from the UI
             const deletedComment = document.getElementById(reviewId);
+            console.log(deletedComment)
             if (deletedComment) {
                 deletedComment.remove();
             }
@@ -254,3 +255,94 @@ const delforms = document.querySelectorAll('form[name="delCommentForm"]');
 delforms.forEach(form => {
     form.addEventListener('submit', deleteOnSubmit);
 });
+
+
+document.querySelectorAll('.edit-button').forEach(button => {
+    button.addEventListener('click', (event) => {
+        console.log("Edit button clicked");
+        event.preventDefault();
+
+        $.post('/get-user-info', function(data) {
+            console.log("In Ajax");
+            const loggedInUsername = data.username; // Get the logged-in user's username from the server response
+
+            // Use event target to get the clicked button and its data index
+            const clickedButton = event.target;
+            const dataIndex = clickedButton.getAttribute('data-index');
+            console.log("Index for user", dataIndex);
+            const commenterUsername = document.querySelector(`.review-profile-name-${dataIndex}`).innerText; // Assuming you have an element with the commenter's username and an id like 'commenter-username-0', 'commenter-username-1', etc.
+            console.log("commenter user", commenterUsername);
+            console.log("logged user", loggedInUsername);
+
+            if (commenterUsername === loggedInUsername) {
+                // Proceed with editing
+                openEditModal(dataIndex);
+                console.log("Match Found");
+            } else {
+                // Close all modals
+                document.querySelectorAll('.edit-popup-container').forEach(modal => {
+                    modal.close();
+                });
+                // Alert and reset
+                alert('You are not authorized to edit this comment.');
+            }
+        })
+        .fail(function(error) {
+            console.error('Error fetching user information:', error);
+            console.log("Error");
+        });
+    });
+});
+
+// function openEditModal(dataIndex) {
+//     // Open the modal for editing using the data index
+//     const modal = document.querySelector(`.edit-popup-container[data-modal-id="${dataIndex}"]`);
+//     if (modal) {
+//         modal.showModal();
+//     }
+// }
+
+document.querySelectorAll('.del-button').forEach(button => {
+    button.addEventListener('click', (event) => {
+        console.log("Delete button clicked");
+        event.preventDefault();
+
+        $.post('/get-user-info', function(data) {
+            console.log("In Ajax");
+            const loggedInUsername = data.username; // Get the logged-in user's username from the server response
+
+            // Use event target to get the clicked button and its data index
+            const clickedButton = event.target;
+            const dataIndex = clickedButton.getAttribute('data-index');
+            console.log("Index for user", dataIndex);
+            const commenterUsername = document.querySelector(`.review-profile-name-${dataIndex}`).innerText; // Assuming you have an element with the commenter's username and an id like 'commenter-username-0', 'commenter-username-1', etc.
+            console.log("commenter user", commenterUsername);
+            console.log("logged user", loggedInUsername);
+
+            if (commenterUsername === loggedInUsername) {
+                // Proceed with deletion
+                openDeleteModal(dataIndex);
+                console.log("Match Found");
+            } else {
+                // Close all delete modals
+                document.querySelectorAll('.delete-popup-container').forEach(modal => {
+                    modal.close();
+                });
+                // Alert and reset
+                alert('You are not authorized to delete this comment.');
+            }
+        })
+        .fail(function(error) {
+            console.error('Error fetching user information:', error);
+            console.log("Error");
+        });
+    });
+});
+
+// function openDeleteModal(dataIndex) {
+//     // Open the modal for deletion using the data index
+//     const modal = document.querySelector(`.delete-popup-container[data-modal-id="${dataIndex}"]`);
+//     if (modal) {
+//         modal.showModal();
+//     }
+// }
