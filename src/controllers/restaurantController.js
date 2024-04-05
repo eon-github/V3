@@ -1,6 +1,6 @@
 const express = require("express");
 const { MongoClient } = require("mongodb");
-const uri = "mongodb://127.0.0.1:27017/eggyDB";
+const uri = "mongodb+srv://maxeneallison:7HocEV76EW2YIBke@eggy-cluster.72vpqp1.mongodb.net/";
 
 const bcrypt = require("bcrypt");
 const saltRounds = 10;
@@ -8,7 +8,7 @@ const saltRounds = 10;
 async function connectToDB() {
   try {
     const client = await MongoClient.connect(uri);
-    return client.db('eggyDB');
+    return client.db('test');
   } catch (error) {
     console.error("Error connecting to MongoDB:", error);
     throw error;
@@ -234,7 +234,7 @@ module.exports = function (app, app_data) {
         }
 
         const client = await MongoClient.connect(uri);
-        const dbo = client.db('eggyDB');
+        const dbo = client.db('test');
         const collName = dbo.collection("users");
 
         const users = await userModel.find({}, "username email").lean();
@@ -287,7 +287,7 @@ module.exports = function (app, app_data) {
   app.post("/read-user", async (req, res) => {
     try {
       const client = await MongoClient.connect(uri);
-      const dbo = client.db('eggyDB');
+      const dbo = client.db('test');
       const collName = dbo.collection("users");
 
       const searchQuery = {
@@ -492,7 +492,7 @@ async function getRestaurantData(req, res, next) {
   const client = new MongoClient(uri);
   try {
     await client.connect();
-    const dbo = client.db('eggyDB');
+    const dbo = client.db('test');
 
     const commentsCollection = dbo.collection("comments");
     const restaurantsCollection = dbo.collection("restaurants");
