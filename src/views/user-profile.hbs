@@ -18,28 +18,28 @@
                                     <div class="top-right-profile-edit-container">
                                         <div class="top-right-profile-edit">
                                             <button id="myBtn">Edit Profile</button>
-                                            <!-- The Modal -->
-                                            <div id="myModal" class="modal">
-
-                                            <!-- Modal content -->
-                                            <div class="modal-content">
-                                                <span class="close">×</span>
-                                                <form name ="update-user" action="update-user" method="post">
-                                                <img id="profilePic" src="images/profile-pic.jpg" alt="Profile Picture" style="width:100px;height:100px;"><br>
-                                                <label for="img">Select image:</label>
-                                                <input type="file" id="img" name="img" accept="image/*"><br>
-                                                <label for="username">Username:</label><br>
-                                                <input type="text" id="username" name="username"><br>
-                                                <label for="fname">First Name:</label><br>
-                                                <input type="text" id="fname" name="fname"><br>
-                                                <label for="lname">Last Name:</label><br>
-                                                <input type="text" id="lname" name="lname"><br>
-                                                <label for="desc">Short Description:</label><br>
-                                                <textarea id="desc" name="desc"></textarea><br>
-                                                <input type="submit" value="Save Changes">
-                                                </form>
-                                            </div>
-                                            </div>
+                                           <div id="myModal" class="modal">
+    <div class="modal-content">
+        <span class="close">×</span>
+        <!-- Added enctype attribute for file upload -->
+        <form id="editProfileForm" enctype="multipart/form-data">
+            <img id="profilePic" src="images/profile-pic.jpg" alt="Profile Picture" style="width:100px;height:100px;"><br>
+            <label for="img">Select image:</label>
+            <input type="file" id="img" name="img" accept="image/*"><br>
+            <label for="username">Username:</label><br>
+            <input type="text" id="username" name="username"><br>
+            <label for="email">Email:</label><br>
+            <input type="email" id="email" name="email"><br>
+            <label for="password">Password:</label><br>
+            <input type="password" id="password" name="password"><br>
+            <label for="desc">Short Description:</label><br>
+            <textarea id="desc" name="description"></textarea><br>
+            <!-- Changed to a submit input for proper form submission -->
+            <input type="submit" value="Save Changes">
+        </form>
+        <button id="deleteAccountBtn" style="background-color: red; color: white;">Delete Account</button>
+    </div>
+</div>
                                         </div>
                                     </div>
                                 </div>

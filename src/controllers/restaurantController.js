@@ -1,7 +1,6 @@
 const express = require("express");
 const { MongoClient } = require("mongodb");
-const uri = "mongodb+srv://maxeneallison:tiQi88bNBTCJdlVT@cluster0.3htzzpu.mongodb.net/";
-
+const uri = "mongodb://127.0.0.1:27017/test";
 const bcrypt = require("bcrypt");
 const saltRounds = 10;
 
@@ -83,11 +82,24 @@ module.exports = function (app, app_data) {
     console.error("Error connecting to MongoDB:", err);
   });
 
-  // Routes
   app.get("/", (req, res) => {
-    console.log(loginInfo);
-    loadServer(req, res, loginInfo);
+
+    const { user } = req.cookies;
+
+    if (user) {
+      // Render the protected content
+      res.redirect('/home');
+    } else {
+        // If the 'user' cookie doesn't exist or user is not authenticated, redirect to the login page
+        loginInfo = null;
+        loadServer(req, res, loginInfo);
+    }
   });
+  app.get("/home", async (req, res) => {
+      const { user } = req.cookies;
+      loginInfo = await userModel.findOne({ username: user }).lean();
+      loadServer(req, res, loginInfo);
+    });
 
   app.post("/update-image", async (req, res) => {
     try {
@@ -172,49 +184,56 @@ module.exports = function (app, app_data) {
 
   app.get("/restaurants", async (req, res) => {
     try {
-      const { stars, query } = req.query;
-      let filter = {};
-
-      // Handle search queries
-      if (query) {
-        filter.restoName = { $regex: new RegExp(query, "i") }; // Case-insensitive search
-      }
-
-      // Handle star ratings
-      if (stars) {
-        const starsArray = Array.isArray(stars)
-          ? stars.map(Number)
-          : [Number(stars)];
-        filter.main_rating = { $in: starsArray };
-      }
-
-      const restaurants = await getData("restaurants", filter);
-      const restaurant_row1 = restaurants.slice(0, 3);
-      const restaurant_row2 = restaurants.slice(3, 6);
-      const restaurant_row3 = restaurants.slice(6);
-
-      // Render the response based on AJAX request or full page render
-      if (req.headers["x-requested-with"] === "XMLHttpRequest") {
-        res.render("partials/establishments", {
-          layout: false,
-          restaurant_row1,
-          restaurant_row2,
-          restaurant_row3,
-          loginData: loginInfo,
-        });
-      } else {
-        res.render("view-establishment", {
-          layout: "index",
-          title: "View Establishments",
-          restaurant_row1,
-          restaurant_row2,
-          restaurant_row3,
-          loginData: loginInfo,
-        });
-      }
+        const { stars, query } = req.query;
+        let filter = {};
+  
+        
+        if (query) {
+            filter = {
+                $or: [
+                    { restoName: { $regex: new RegExp(query, "i") } },
+                    { description: { $regex: new RegExp(query, "i") } }
+                ]
+            };
+        }
+  
+        // Handle star ratings
+        if (stars) {
+            const starsArray = Array.isArray(stars) ? stars.map(Number) : [Number(stars)];
+            if(filter.$or) {
+                filter = { $and: [{ main_rating: { $in: starsArray } }, filter] };
+            } else {
+                filter.main_rating = { $in: starsArray };
+            }
+        }
+  
+        const restaurants = await getData("restaurants", filter);
+        const restaurant_row1 = restaurants.slice(0, 3);
+        const restaurant_row2 = restaurants.slice(3, 6);
+        const restaurant_row3 = restaurants.slice(6);
+  
+        
+        if (req.headers['x-requested-with'] === 'XMLHttpRequest') {
+            res.render("partials/establishments", {
+                layout: false,
+                restaurant_row1,
+                restaurant_row2,
+                restaurant_row3,
+                loginData: loginInfo
+            });
+        } else {
+            res.render("view-establishment", {
+                layout: "index",
+                title: "View Establishments",
+                restaurant_row1,
+                restaurant_row2,
+                restaurant_row3,
+                loginData: loginInfo,
+            });
+        }
     } catch (error) {
-      console.error("Error fetching establishments:", error);
-      res.status(500).send("Internal Server Error");
+        console.error("Error fetching establishments:", error);
+        res.status(500).send("Internal Server Error");
     }
   });
 
@@ -283,55 +302,48 @@ module.exports = function (app, app_data) {
     }
   );
 
-  // Route to login user
   app.post("/read-user", async (req, res) => {
     try {
-      const client = await MongoClient.connect(uri);
-      const dbo = client.db('test');
-      const collName = dbo.collection("users");
+      const { userlogin, passlogin , remember} = req.body;
 
-      const searchQuery = {
-        username: req.body.userlogin,
-        password: req.body.passlogin,
-      };
+      // Find the user in the database
+      const user = await userModel.findOne({ username: userlogin }).lean();
 
-      let current_hashed_password = "";
+      if (!user) {
+        return res.redirect('/');
+      }
 
-      const username = await userModel
-        .findOne({ username: req.body.userlogin })
-        .lean();
+      bcrypt.compare(passlogin, user.password, (err, isValid) => {
+        if (err) {
+          console.error("Error comparing passwords:", err);
+          return res.status(500).send("Internal Server Error");
+        }
 
-      bcrypt.hash(req.body.passlogin, saltRounds, async function (err, hash) {
-        current_hashed_password = hash;
-
-        const userInfo = await userModel
-          .findOne({
-            username: req.body.userlogin
-          })
-          .lean();
-
-          console.log(userInfo);
-
-        if (userInfo) {
-          loginInfo = {
-            username: req.body.userlogin,
-            password: req.body.passlogin,
+        if (isValid) { // Password is correct
+          // Set the cookie if "Remember Me" is checked
+          const options = {
+            maxAge: remember ? 30 * 24 * 60 * 60 * 1000 : 0, // 30 days or 0 (session cookie)
+            httpOnly: true, // Cookie accessible only by server
           };
-          res.redirect("/");
+          res.cookie('user', userlogin, options);
+
+          // Redirect to the protected route
+          return res.redirect('/home');
         } else {
-          loginInfo = null;
-          res.redirect("/");
+          // Incorrect password, redirect back to login
+          return res.redirect('/');
         }
       });
     } catch (error) {
       console.error("Error reading user:", error);
       res.status(500).send("Internal Server Error");
     }
-  });
+  }); 
 
-  // Route to logout user
+
   app.post("/logout-user", (req, res) => {
     loginInfo = null;
+    res.clearCookie('user');
     loadServer(req, res, null);
   });
 
@@ -527,29 +539,39 @@ async function getRestaurantData(req, res, next) {
 app.get("/:restaurantLink", getRestaurantData, async (req, resp) => {
   const restaurantLink = req.params.restaurantLink;
   const { comments, restaurants } = resp.locals;
+  let commentsForRestaurant = comments;
 
   // Find the restaurant data based on the restaurant link
   const restaurantData = restaurants.find(r => r.restoLink === restaurantLink);
 
   if (restaurantData) {
-    // Filter comments based on the restaurant name
-    const commentsForRestaurant = comments.filter(comment => comment.restoName === restaurantData.restoName);
+      // If search query exists, filter comments based on title or content
+      if (req.query.query) {
+          const queryTC = req.query.query;
+          commentsForRestaurant = commentsForRestaurant.filter(comment =>
+              comment.restoName === restaurantData.restoName &&
+              (comment.title.includes(queryTC) || comment.content.includes(queryTC))
+          );
+      } else {
+          // Otherwise, display all comments for the restaurant
+          commentsForRestaurant = commentsForRestaurant.filter(comment =>
+              comment.restoName === restaurantData.restoName
+          );
+      }
 
-    // Render the page with the restaurant data and filtered comments
-    resp.render("estb-review", {
-      layout: "estb-review-layout",
-      title: restaurantData.restoName,
-      commentData: commentsForRestaurant, // Use filtered comments from res.locals
-      restoData: [restaurantData], // Wrap the restaurant data in an array to keep the structure consistent
-      loginData: loginInfo
-    });
+      // Render the page with the restaurant data and filtered comments
+      resp.render("estb-review", {
+          layout: "estb-review-layout",
+          title: restaurantData.restoName,
+          commentData: commentsForRestaurant,
+          restoData: [restaurantData],
+          loginData: loginInfo
+      });
   } else {
-    // No match was found, handle the error (e.g., render a 404 page)
-    resp.status(404).render("not-found-page");
+      // No match was found, handle the error (e.g., render a 404 page)
+      resp.status(404).render("not-found-page");
   }
 });
-
-
 
 
 

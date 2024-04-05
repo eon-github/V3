@@ -2,11 +2,14 @@ document.addEventListener("DOMContentLoaded", function() {
   const searchForm = document.querySelector(".search-form");
   const searchInput = document.querySelector(".search-input");
 
+
   searchForm.addEventListener("submit", function(event) {
     event.preventDefault(); // Prevent the form from submitting traditionally
 
+
     const query = searchInput.value.trim();
     const establishmentsContainer = document.querySelector(".main-list"); // Move inside to check on submit
+
 
     if (query) {
       if (establishmentsContainer) {
